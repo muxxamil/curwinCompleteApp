@@ -8,7 +8,7 @@
 	    session_start();
 	}
 
-	if(!empty($_GET['onlyLoggedInUser']) && $_GET['onlyLoggedInUser'] == true) {
+	if(!empty($_GET['onlyLoggedInUser']) && $_GET['onlyLoggedInUser'] == true && !in_array($PRIVILEGES['CAN_MANAGE_ALL_SCHEDULE'], $_SESSION['privileges'])) {
 		$_GET['bookedBy'] = $_SESSION['userInfo']->id;
 	}
 
