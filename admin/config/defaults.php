@@ -16,7 +16,7 @@ $PAGES_LINK = array(
 	"User" 		=> "usersList",
 	"Blog" 		=> "postsList",
 	"Calendar" 	=> "calendar",
-	"Login"		=> "Index"
+	"Login"		=> "index"
 );
 
 error_reporting(0);
