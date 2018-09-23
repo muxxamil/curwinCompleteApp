@@ -167,3 +167,7 @@ async function getLatestEvents() {
 	});
 
 }).apply(this, [jQuery]);
+
+// module.exports = {
+// 	initCalendar: initCalendar()
+// }

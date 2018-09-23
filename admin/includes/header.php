@@ -1,11 +1,17 @@
 <?php
 
+include_once('config/defaults.php');
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
 if(empty($_SESSION['ApiToken'])) {
 	header('Location: index');
+}
+
+if(!hasAccess($activeNav, $_SESSION['privileges'])) {
+	header('Location: '. getAcessibleNav($_SESSION['privileges']));
 }
 
 ?>
@@ -127,54 +133,78 @@ if(empty($_SESSION['ApiToken'])) {
 				            <nav id="menu" class="nav-main" role="navigation">
 				            
 				                <ul class="nav nav-main">
-				                    <li class="<?php echo ($activeNav == 'Dashboard') ? 'nav-active' : ''; ?>">
-				                        <a class="nav-link" href="dashboard">
-				                            <i class="fas fa-home" aria-hidden="true"></i>
-				                            <span>Dashboard</span>
-				                        </a>                        
-				                    </li>
-				                    <li class="<?php echo ($activeNav == 'Calendar') ? 'nav-active' : ''; ?>">
-				                        <a class="nav-link" href="calendar.php">
-				                            <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-				                            <span>Calendar</span>
-				                        </a>                        
-				                    </li>
-				                    <li class="nav-parent <?php echo ($activeNav == 'User') ? 'nav-active' : ''; ?>">
-				                        <a class="nav-link" href="usersList">
-				                            <i class="fas fa-users" aria-hidden="true"></i>
-				                            <span>Users</span>
-				                        </a>
-				                        <ul class="nav nav-children">
-				                            <li>
-				                                <a class="nav-link" href="usersList">
-				                                    Users List
-				                                </a>
-				                            </li>
-				                            <li>
-				                                <a class="nav-link" href="addUser">
-				                                    Add new User
-				                                </a>
-				                            </li>
-				                        </ul>
-				                    </li>
-				                    <li class="nav-parent <?php echo ($activeNav == 'Blog') ? 'nav-active' : ''; ?>">
-				                        <a class="nav-link" href="postsList">
-				                            <i class="fab fa-blogger" aria-hidden="true"></i>
-				                            <span>Blog</span>
-				                        </a>
-				                        <ul class="nav nav-children">
-				                            <li>
-				                                <a class="nav-link" href="postsList">
-				                                    Posts List
-				                                </a>
-				                            </li>
-				                            <li>
-				                                <a class="nav-link" href="addPost">
-				                                    Add new Post
-				                                </a>
-				                            </li>
-				                        </ul>
-				                    </li>
+<?php
+									if(hasAccess('Dashboard', $_SESSION['privileges'])) {
+?>
+										<li class="<?php echo ($activeNav == 'Dashboard') ? 'nav-active' : ''; ?>">
+					                        <a class="nav-link" href="dashboard">
+					                            <i class="fas fa-home" aria-hidden="true"></i>
+					                            <span>Dashboard</span>
+					                        </a>                        
+					                    </li>
+<?php
+									}
+?>
+<?php
+									if(hasAccess('Calendar', $_SESSION['privileges'])) {
+?>
+					                    <li class="<?php echo ($activeNav == 'Calendar') ? 'nav-active' : ''; ?>">
+					                        <a class="nav-link" href="calendar.php">
+					                            <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+					                            <span>Calendar</span>
+					                        </a>                        
+					                    </li>
+<?php
+									}
+?>
+<?php
+									if(hasAccess('User', $_SESSION['privileges'])) {
+?>
+					                    <li class="nav-parent <?php echo ($activeNav == 'User') ? 'nav-active' : ''; ?>">
+					                        <a class="nav-link" href="usersList">
+					                            <i class="fas fa-users" aria-hidden="true"></i>
+					                            <span>Users</span>
+					                        </a>
+					                        <ul class="nav nav-children">
+					                            <li>
+					                                <a class="nav-link" href="usersList">
+					                                    Users List
+					                                </a>
+					                            </li>
+					                            <li>
+					                                <a class="nav-link" href="addUser">
+					                                    Add new User
+					                                </a>
+					                            </li>
+					                        </ul>
+					                    </li>
+<?php
+									}
+?>
+<?php
+									if(hasAccess('Blog', $_SESSION['privileges'])) {
+?>
+					                    <li class="nav-parent <?php echo ($activeNav == 'Blog') ? 'nav-active' : ''; ?>">
+					                        <a class="nav-link" href="postsList">
+					                            <i class="fab fa-blogger" aria-hidden="true"></i>
+					                            <span>Blog</span>
+					                        </a>
+					                        <ul class="nav nav-children">
+					                            <li>
+					                                <a class="nav-link" href="postsList">
+					                                    Posts List
+					                                </a>
+					                            </li>
+					                            <li>
+					                                <a class="nav-link" href="addPost">
+					                                    Add new Post
+					                                </a>
+					                            </li>
+					                        </ul>
+					                    </li>
+<?php
+									}
+?>
 				                    <li>
 				                        <a class="nav-link" href="http://curwinbusinesscentre.com" target="blank">
 				                            <i class="fas fa-external-link-alt" aria-hidden="true"></i>

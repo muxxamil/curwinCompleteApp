@@ -2,33 +2,57 @@
 
 include_once('../../../config/defaults.php');
 
-$officeHoursQuota = "-";
+$normalHoursQuota = "-";
+$peakHoursQuota 	  = "-";
+$boardroomHoursQuota 	  = "-";
 $offHoursQuota 	  = "-";
 if(!empty($_POST['quota']['rows'])) {
-	$userQuota 			= current($_POST['quota']['rows']);
-	$officeHoursQuota 	= $userQuota['staffedHours'];
-	$offHoursQuota 		= $userQuota['unStaffedHours'];
+	$userQuota 			 = current($_POST['quota']['rows']);
+	$normalHoursQuota 	 = round($userQuota['normalHours'], 2);
+	$peakHoursQuota 	 = round($userQuota['peakHours'], 2);
+	$boardroomHoursQuota = round($userQuota['boardroomHours'], 2);
+	$offHoursQuota 		 = round($userQuota['unStaffedHours'], 2);
 }
 
 ?>
 
-<div class="col-md-6">
+<div class="col-md-3">
 	<section class="card mb-4">
 		<header class="card-header">
-			<h2 class="card-title">Staffed Hours</h2>
+			<h2 class="card-title">Normal Hours</h2>
 		</header>
 		<div class="card-body">
-			<?php echo round($officeHoursQuota, 2); ?>
+			<?php echo $normalHoursQuota; ?>
 		</div>
 	</section>
 </div>
-<div class="col-md-6">
+<div class="col-md-3">
+	<section class="card mb-4">
+		<header class="card-header">
+			<h2 class="card-title">Peak Hours</h2>
+		</header>
+		<div class="card-body">
+			<?php echo $peakHoursQuota; ?>
+		</div>
+	</section>
+</div>
+<div class="col-md-3">
+	<section class="card mb-4">
+		<header class="card-header">
+			<h2 class="card-title">Boardroom Hours</h2>
+		</header>
+		<div class="card-body">
+			<?php echo $boardroomHoursQuota; ?>
+		</div>
+	</section>
+</div>
+<div class="col-md-3">
 	<section class="card mb-4">
 		<header class="card-header">
 			<h2 class="card-title">Un-Staffed Hours</h2>
 		</header>
 		<div class="card-body">
-			<?php echo round($offHoursQuota, 2); ?>
+			<?php echo $offHoursQuota; ?>
 		</div>
 	</section>
 </div>

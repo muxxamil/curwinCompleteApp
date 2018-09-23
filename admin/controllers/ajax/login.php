@@ -17,6 +17,7 @@
 
 		$_SESSION['ApiToken'] = $response['body']->token;
 		$_SESSION['userInfo'] = $response['body']->userInfo;
+		$_SESSION['privileges'] = $response['body']->userInfo->privileges;
 	}
 
 	echo json_encode($response);
