@@ -36,8 +36,8 @@ async function getLatestEvents() {
 					var dateFrom = new Date(tempObj.from);
 					var dateTo = new Date(tempObj.from);
 					tempObj.start = moment(tempObj.from).format('YYYY-MM-DD')
-					tempObj.start = new Date(dateFrom.getFullYear(), dateFrom.getMonth(), dateFrom.getDate(), moment(tempObj.from).format('HH'), moment(tempObj.from).format('MM'));
-					tempObj.end = new Date(dateTo.getFullYear(), dateTo.getMonth(), dateTo.getDate(), moment(tempObj.to).format('HH'), moment(tempObj.to).format('MM'));
+					tempObj.start = new Date(dateFrom.getFullYear(), dateFrom.getMonth(), dateFrom.getDate(), moment(tempObj.from).format('HH'), moment(tempObj.from).format('mm'));
+					tempObj.end = new Date(dateTo.getFullYear(), dateTo.getMonth(), dateTo.getDate(), moment(tempObj.to).format('HH'), moment(tempObj.to).format('mm'));
 					tempObj.from = moment(tempObj.from).format('hh:mm A')
 					tempObj.to = moment(tempObj.to).format('hh:mm A')
 					eventsArr.push(tempObj);
