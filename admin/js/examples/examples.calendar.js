@@ -30,7 +30,17 @@ async function getLatestEvents() {
 				});
 			}
 		} else {
-			eventsArr = data.body.rows;
+			if(data.body.rows && data.body.rows.length) {
+				for (var i = data.body.rows.length - 1; i >= 0; i--) {
+					let tempObj = data.body.rows[i];
+					tempObj.start = moment(tempObj.from).format('YYYY-MM-DD')
+					tempObj.from = moment(tempObj.from).format('hh:mm A')
+					tempObj.to = moment(tempObj.to).format('hh:mm A')
+					eventsArr.push(tempObj);
+				}
+			}
+			console.log(data.body.rows);
+			// eventsArr = data.body.rows;
 		}
 	});
 
@@ -75,7 +85,7 @@ async function getLatestEvents() {
 		$calendar.fullCalendar({
 			header: {
 				left: 'title',
-				right: 'today,next'
+				right: 'prev,today,next,basicDay,basicWeek,month'
 			},
 
 			timeFormat: 'h:mm',
@@ -85,7 +95,9 @@ async function getLatestEvents() {
 				next: 'fas fa-caret-right',
 			},
 			buttonText: {
-			  today:    'Current Month'
+			  basicWeek:    'Weekly View',
+			  basicDay:    'Daily View',
+			  month:    'Monthly View'
 			},
 			contentHeight: 450,
 
@@ -94,7 +106,12 @@ async function getLatestEvents() {
 			droppable: false, // this allows things to be dropped onto the calendar !!!
 			events: function( start, end, timezone, callback ) { alert(start.unix() + " " + end.unix() + " " + timezone) },
 			dayClick: function(date, jsEvent, view, resourceObj) {
+				console.log(date.valueOf());
 				if(date.diff(moment().format('YYYY-MM-DD')) >= 0) {
+					$('#bookedSlots').html('');
+					$('#staffedHours').html('');
+					$('#officeLocationDropdown').val('');
+
 					$('#rentalLocationBookingModal > .card > .card-header > .card-title').html("Booking for " + date.format('DD-MM-YYYY'));
 					$('#bookingForDate').val(date.format('YYYY-MM-DD'));
 					$.magnificPopup.open({
@@ -103,6 +120,7 @@ async function getLatestEvents() {
 					  },
 					  type: 'inline'
 					});
+
 				} else {
 					new PNotify({
 						title: 'Error!',

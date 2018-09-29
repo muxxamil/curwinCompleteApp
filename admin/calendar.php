@@ -57,7 +57,10 @@
 <?php											}
 ?>											</select>
 										</div>
-										<div id="bookedSlots" class="form-group col-md-12">
+										<div id="bookedSlots" class="form-group col-md-6 mb-5">
+											
+										</div>
+										<div id="staffedHours" class="form-group col-md-6 mb-5">
 											
 										</div>
 									</div>
@@ -102,6 +105,7 @@
 $pageSpecificJS = '<script src="vendor/jquery-ui/jquery-ui.js"></script>
 					<script src="vendor/jqueryui-touch-punch/jqueryui-touch-punch.js"></script>
 					<script src="vendor/moment/moment.js"></script>
+					<script src="vendor/moment/moment-timezone.js"></script>
 					<script src="vendor/fullcalendar/fullcalendar.js"></script>
 					<script src="vendor/jquery-validation/jquery.validate.js"></script>
 					<script src="js/examples/examples.validation.js"></script>

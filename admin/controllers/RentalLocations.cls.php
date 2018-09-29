@@ -16,24 +16,17 @@ class RentalLocations
 		return $response;
 	}
 
-	function get_future_bookings($params) 
-	{
-		global $API_URL;
-		$response = CallAPI('GET', 'rentalLocations', "$params[id]/futureBookings", $params);
-		return $response;
-	}
-
-	function get_past_bookings($params) 
-	{
-		global $API_URL;
-		$response = CallAPI('GET', 'rentalLocations', "$params[id]/pastBookings", $params);
-		return $response;
-	}
-
 	function book_location($params) 
 	{
 		global $API_URL;
 		$response = CallAPI('POST', 'rentalLocations', "$params[rentalLocationId]/book", $params);
+		return $response;
+	}
+
+	function get_staffed_hours($params) 
+	{
+		global $API_URL;
+		$response = CallAPI('GET', 'rentalLocations', "$params[id]/staffedHours", $params);
 		return $response;
 	}
 

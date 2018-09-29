@@ -3,8 +3,34 @@ $(document).ready(function(){
 });
 
 $("#officeLocationDropdown").change(function () {
-    showOfficeLocationBookings(this.value, $("#bookingForDate").val());
+    showOfficeLocationBookings(this.value, moment.utc(moment($("#bookingForDate").val() + " 00:00:01", "YYYY-MM-DD HH:mm:ss")).valueOf(), moment.utc(moment($("#bookingForDate").val() + " 23:59:59", "YYYY-MM-DD HH:mm:ss")).valueOf());
+    showOfficeLocationStaffHours(this.value, moment.utc(moment($("#bookingForDate").val(), "YYYY-MM-DD HH:mm:ss")).valueOf());
 });
+
+function showOfficeLocationStaffHours(officeLocationId, date) {
+	if(officeLocationId) {
+		var dayNumber = moment.utc(date).local().day();
+	    $.ajax({
+		    url: 'controllers/ajax/office_location_staff_hours.php',
+		    type: 'GET',
+		    dataType: "json",
+		    data: {
+		    	id: officeLocationId,
+		    	dayNumber: dayNumber,
+		    	date: moment.utc(date).format("YYYY-MM-DD")
+		    },
+	        success: (data) => {
+			    if(data && data.status == 200) {
+			    	loadStaffedHours((data.body) ? data.body : [], moment.utc(date).format("YYYY-MM-DD"));
+			    } else {
+			    	$("#staffedHours").html("<p class='text-danger'>Error! Booking cannot take place, Please contact support.</p>")
+			    }
+			}
+		});
+    } else {
+    	$("#staffedHours").html('');
+    }
+}
 
 function refreshUserQuota() {
 	$.ajax({
@@ -13,8 +39,6 @@ function refreshUserQuota() {
 	    dataType: "json",
 	    data: {onlyLoggedInUser: true},
         success: (data) => {
-        	console.log(data);
-        	console.log(data.status);
 		    if(data && data.status == 200) {
 		    	$.ajax({
 				    url: 'controllers/ajax/tpl/userHoursQuota.tpl.php',
@@ -38,7 +62,7 @@ function refreshUserQuota() {
 	});
 }
 
-function showOfficeLocationBookings(officeLocationId, date) {
+function showOfficeLocationBookings(officeLocationId, from, to) {
 	if(officeLocationId) {
 	    $.ajax({
 		    url: 'controllers/ajax/office_location_bookings.php',
@@ -46,7 +70,8 @@ function showOfficeLocationBookings(officeLocationId, date) {
 		    dataType: "json",
 		    data: {
 		    	id: officeLocationId,
-		    	date: date
+		    	from: from,
+		    	to: to
 		    },
 	        success: (data) => {
 			    if(data && data.status == 200) {
@@ -67,23 +92,38 @@ function showOfficeLocationBookings(officeLocationId, date) {
     }
 }
 
-function loadBookedSlots(data) {
-	if(data && data.length) {
+function loadStaffedHours(data, date) {
+	if(data) {
+		data.to = moment.tz(data.to, 'YYYY-MM-DD HH:mm:ss', 'America/Halifax').local().format('YYYY-MM-DD HH:mm:ss');
+		data.from = moment.tz(data.from, 'YYYY-MM-DD HH:mm:ss', 'America/Halifax').local().format('YYYY-MM-DD HH:mm:ss');
 		$.ajax({
-		    url: 'controllers/ajax/tpl/bookedScheduleList.tpl.php',
+		    url: 'controllers/ajax/tpl/staffedHours.tpl.php',
 		    type: 'POST',
 		    dataType: "html",
 		    data: {
-		    	bookedSlots: data,
+		    	staffHours: data,
+		    	date: date,
 		    },
 	        success: function(data){
-			    $("#bookedSlots").html(data);
+			    $("#staffedHours").html(data);
 			}
 		});
 	} else {
-	    $("#bookedSlots").html("<p class='text-danger'>No Booked Slots.</p>")
+	    $("#staffedHours").html("<p class='text-danger'>No Staffed Hours.</p>")
 	}
-	
+}
+function loadBookedSlots(data) {
+	$.ajax({
+	    url: 'controllers/ajax/tpl/bookedScheduleList.tpl.php',
+	    type: 'POST',
+	    dataType: "html",
+	    data: {
+	    	bookedSlots: data,
+	    },
+        success: function(data){
+		    $("#bookedSlots").html(data);
+		}
+	});	
 }
 
 $('.booking-schedule-form').each(function(){
@@ -100,6 +140,11 @@ $('.booking-schedule-form').each(function(){
 			$(formData).each(function(index, obj){
 			    requestData[obj.name] = obj.value;
 			});
+
+			requestData.from = moment.utc(moment(requestData.bookingForDate + " " + requestData.timeFrom, "YYYY-MM-DD h:mm:ss A")).valueOf();
+			requestData.to = moment.utc(moment(requestData.bookingForDate + " " + requestData.timeTo, "YYYY-MM-DD h:mm:ss A")).valueOf();
+			// requestData.bookingForDate = moment(requestData.bookingForDate, "YYYY-MM-DD");
+			requestData.timezone = moment.tz.guess();
 
 			// Ajax Submit
 			$.ajax({
@@ -125,7 +170,8 @@ $('.booking-schedule-form').each(function(){
 						});
 					}
 				} else {
-					showOfficeLocationBookings(requestData.rentalLocationId, $("#bookingForDate").val());
+					
+    				showOfficeLocationBookings(requestData.rentalLocationId, moment.utc(moment($("#bookingForDate").val() + " 00:00:01", "YYYY-MM-DD HH:mm:ss")).valueOf(), moment.utc(moment($("#bookingForDate").val() + " 23:59:59", "YYYY-MM-DD HH:mm:ss")).valueOf());
 					refreshUserQuota();
 					new PNotify({
 						title: 'Success!',

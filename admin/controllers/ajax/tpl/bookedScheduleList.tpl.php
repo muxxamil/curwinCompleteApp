@@ -4,6 +4,14 @@
 
 <h3>Already Booked Slots</h3>
 
+<?php
+if(empty($_POST['bookedSlots'])) {
+?>
+	-
+<?php
+return;
+}
+?>
 <ul>
 <?php
 	foreach ($_POST['bookedSlots'] as $key => $value) {
@@ -13,6 +21,6 @@
 	}
 ?>
 </ul>
-<p class="text-danger">
+<!-- <p class="text-danger">
     Note: Please try Different Slots...
-</p>
+</p> -->
