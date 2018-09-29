@@ -132,7 +132,7 @@ async function getLatestEvents() {
 			eventLimit: 2,
 			eventMouseover: function (data, event, view) {
 
-            var tooltip = '<div class="tooltiptopicevent" style="width:auto;height:auto;background:#c1c1c1;position:absolute;z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%;">' + 'Room: ' + data.title + '</br>' + 'From: ' + data.from + '</br>' + 'To: ' + data.to + '</div>';
+            var tooltip = '<div class="tooltiptopicevent" style="width:auto;height:auto;background:#c1c1c1;position:absolute;z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%;">' + 'Room: ' + data.title + '</br>' + 'From: ' + data.from + '</br>' + 'To: ' + data.to + '</br>' + 'By: ' + data.by + '</div>';
 
             $("body").append(tooltip);
             $(this).mouseover(function (e) {
