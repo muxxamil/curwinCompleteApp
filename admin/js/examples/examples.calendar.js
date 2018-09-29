@@ -33,7 +33,11 @@ async function getLatestEvents() {
 			if(data.body.rows && data.body.rows.length) {
 				for (var i = data.body.rows.length - 1; i >= 0; i--) {
 					let tempObj = data.body.rows[i];
+					var dateFrom = new Date(tempObj.from);
+					var dateTo = new Date(tempObj.from);
 					tempObj.start = moment(tempObj.from).format('YYYY-MM-DD')
+					tempObj.start = new Date(dateFrom.getFullYear(), dateFrom.getMonth(), dateFrom.getDate(), moment(tempObj.from).format('HH'), moment(tempObj.from).format('MM'));
+					tempObj.end = new Date(dateTo.getFullYear(), dateTo.getMonth(), dateTo.getDate(), moment(tempObj.to).format('HH'), moment(tempObj.to).format('MM'));
 					tempObj.from = moment(tempObj.from).format('hh:mm A')
 					tempObj.to = moment(tempObj.to).format('hh:mm A')
 					eventsArr.push(tempObj);
@@ -85,7 +89,7 @@ async function getLatestEvents() {
 		$calendar.fullCalendar({
 			header: {
 				left: 'title',
-				right: 'prev,today,next,basicDay,basicWeek,month'
+				right: 'prev,today,next,listWeek,agendaWeek,month'
 			},
 
 			timeFormat: 'h:mm',
@@ -95,8 +99,8 @@ async function getLatestEvents() {
 				next: 'fas fa-caret-right',
 			},
 			buttonText: {
-			  basicWeek:    'Weekly View',
-			  basicDay:    'Daily View',
+			  agendaWeek:    'Weekly View',
+			  listWeek:    'Daily View',
 			  month:    'Monthly View'
 			},
 			contentHeight: 450,
