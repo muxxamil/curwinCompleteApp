@@ -37,8 +37,8 @@
 						<span class="top-sub-title text-color-light-2">ALREADY A MEMBER?</span>
 						<h2 class="text-color-light font-weight-bold text-4 mb-4">Sign In</h2>
 
-						<!-- <form id="frmSignIn" method="post"> -->
-							<div class="singin-form-error alert alert-danger" style="display: none">
+						<form class="login-form" method="post" action="admin/controllers/ajax/login.php">
+							<div id="login-form-error" class="singin-form-error alert alert-danger d-none">
 								<strong>Error!</strong> Wrong Email or password.
 								<span class="mail-error-message d-block"></span>
 							</div>
@@ -51,7 +51,7 @@
 							<div class="form-row">
 								<div class="form-group col">
 									<label class="text-color-light-2" for="frmSignInPassword">PASSWORD</label>
-									<input type="password" value="" class="form-control bg-light rounded border-0 text-1" name="password" id="frmSignInPassword" required>
+									<input type="password" value="" class="form-control bg-light rounded border-0 text-1" name="password" id="password" required>
 								</div>
 							</div>
 							<div class="form-row mb-3">
@@ -63,15 +63,16 @@
 						        		</label>
 							      	</div>
 							    </div>
-						      	<div class="form-group col text-right">
+						      	<!-- <div class="form-group col text-right">
 						      		<a href="#" class="forgot-pw text-color-light-2 d-block">Forgot password?</a>
-						      	</div>
+						      	</div> -->
 							</div>
 							<div class="row align-items-center">
 								<div class="col text-right">
 									<button id="signIn" class="btn btn-dark btn-rounded btn-v-3 btn-h-3 font-weight-bold">SIGN IN</button>
 								</div>
 							</div>
+						</form>
 					</div>
 				</div>
 				<div class="col-lg-6 appear-animation" data-appear-animation="fadeInRightShorter" data-appear-animation-delay="200">
@@ -79,21 +80,33 @@
 						<span class="top-sub-title text-color-primary">DON'T HAVE AN ACCOUNT?</span>
 						<h2 class="font-weight-bold text-4 mb-4">Register Now!</h2>
 
-						<form action="secretCode.php" id="frmRegister" method="post">
+						<form class="register-form" id="frmRegister" action="admin/controllers/ajax/add_user.php" method="post">
+							<div id="register-form-error" class="singin-form-error alert alert-danger d-none">
+								<strong>Error!</strong> Wrong Email or password.
+								<span class="mail-error-message d-block"></span>
+							</div>
+							<div id="register-form-success" class="singin-form-error alert alert-success d-none">
+								<strong>Thank You!</strong> Waiting for review and Approval of your Application.
+								<span class="mail-error-message d-block"></span>
+							</div>
 							<div class="form-row">
-								<div class="form-group col mb-2">
-									<label for="frmRegisterEmail">EMAIL / USERNAME</label>
+								<div class="form-group col-lg-6">
+									<label for="name">NAME</label>
+									<input type="text" value="" maxlength="100" class="form-control bg-light-5 rounded border-0 text-1" name="name" id="name" required>
+								</div>
+								<div class="form-group col-lg-6">
+									<label for="frmRegisterEmail">EMAIL</label>
 									<input type="email" value="" maxlength="100" class="form-control bg-light-5 rounded border-0 text-1" name="email" id="frmRegisterEmail" required>
 								</div>
 							</div>
 							<div class="form-row mb-5">
 								<div class="form-group col-lg-6">
-									<label for="frmRegisterPassword">PASSWORD</label>
-									<input type="password" value="" class="form-control bg-light-5 rounded border-0 text-1" name="password" id="frmRegisterPassword" required>
+									<label for="cell">CONTACT NUMBER</label>
+									<input type="text" value="" class="form-control bg-light-5 rounded border-0 text-1" name="cell" id="cell" required>
 								</div>
 								<div class="form-group col-lg-6">
-									<label for="frmRegisterPassword2">RE-ENTER PASSWORD</label>
-									<input type="password" value="" class="form-control bg-light-5 rounded border-0 text-1" name="password2" id="frmRegisterPassword2" required>
+									<label for="frmRegisterPassword">PASSWORD</label>
+									<input type="password" value="" class="form-control bg-light-5 rounded border-0 text-1" name="password" id="frmRegisterPassword" required>
 								</div>
 							</div>
 							<div class="row align-items-center">
@@ -109,8 +122,78 @@
 	</section>
 
 	<script type="text/javascript">
-		$('#signIn').click(function(){
-			$('.singin-form-error').show();
+		$('.login-form').each(function(){
+			$(this).validate({
+				submitHandler: function(form) {
+					var $form = $(form),
+					$messageError = $form.find('#login-form-error');
+
+					// Fields Data
+					var formData = $form.serializeArray(),
+						data = {};
+
+					$(formData).each(function(index, obj){
+					    data[obj.name] = obj.value;
+					});
+
+					// Ajax Submit
+					$.ajax({
+						type: 'POST',
+						url: $form.attr('action'),
+						data: data
+					}).always(function(data, textStatus, jqXHR) {
+						data = JSON.parse(data);
+						if(!data || data.status != 200) {
+							$messageError.removeClass('d-none');
+						} else {
+							$messageError.addClass('d-none');
+							window.location = "admin/dashboard";
+						}
+					});
+				}
+			});
+		});
+
+		$('.register-form').each(function(){
+			$(this).validate({
+				submitHandler: function(form) {
+					var $form = $(form),
+					$messageError = $form.find('#register-form-error');
+					$messageSuccess = $form.find('#register-form-success');
+
+					// Fields Data
+					var formData = $form.serializeArray(),
+						data = {};
+
+					$(formData).each(function(index, obj){
+					    data[obj.name] = obj.value;
+					});
+
+					// Ajax Submit
+					$.ajax({
+						type: 'POST',
+						url: $form.attr('action'),
+						data: data
+					}).always(function(data, textStatus, jqXHR) {
+						data = JSON.parse(data);
+						if(!data || data.status != 200) {
+							var errorHtml = "<ul class='mb-0'> <li>Unable to Register.</li></ul>";
+		                    if(data.body && data.body.error) {
+		                        errorHtml = "<ul class='mb-0'>";
+		                        for (var i = 0; i < data.body.error.length; i++) {
+		                            errorHtml += "<li>" + data.body.error[i] + "</li>";
+		                        }
+		                    }
+							$messageError.html(errorHtml);
+							$messageSuccess.addClass('d-none');
+							$messageError.removeClass('d-none');
+						} else {
+							$messageError.addClass('d-none');
+							$messageSuccess.removeClass('d-none');
+						}
+					});
+				}
+			});
 		});
 	</script>
 

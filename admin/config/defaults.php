@@ -1,6 +1,8 @@
 <?php
 
-$API_URL = 'localhost:3002';
+error_reporting(0);
+
+// $API_URL = 'localhost:3002';
 $API_URL = '162.255.85.99:3001';
 // $IMAGE_PREFIX = 'http://www.curwinbusinesscentre.com/img/landing/';
 
@@ -28,7 +30,9 @@ $PAGES_LINK = array(
 	"Login"		=> "index"
 );
 
-error_reporting(0);
+$USER_DESIGNATION = array(
+	"visitor" => "7"
+);
 
 function hasAccess($page, $privArr) {
 	global $DEFINITION_PRIVILEGES;

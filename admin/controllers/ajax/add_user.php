@@ -10,6 +10,10 @@
 		$is_active = true;
 	}
 
+	if(empty($_POST['designationId'])) {
+		$_POST['designationId'] = $USER_DESIGNATION["visitor"];
+	}
+
 	$_POST['active'] = $is_active;
 	$response = CallAPI('POST', 'users', "", $_POST, true);
 	echo json_encode($response);

@@ -127,12 +127,27 @@
 							</div>
 							<div class="header-column justify-content-end">
 								<div class="header-button d-none d-sm-flex mx-3">
-									<a href="login.php" class="btn btn-outline btn-rounded btn-primary btn-4 btn-icon-effect-1" target="_blank">
-										<span class="wrap">
-											<span>Login</span>
-											<i class="fas fa-user"></i>
-										</span>
-									</a>
+<?php
+									if(empty($_SESSION['ApiToken'])) {
+?>
+										<a href="login.php" class="btn btn-outline btn-rounded btn-primary btn-4 btn-icon-effect-1" target="_blank">
+											<span class="wrap">
+												<span>Login</span>
+												<i class="fas fa-user"></i>
+											</span>
+										</a>
+<?php
+									} else {
+?>
+										<a href="admin/dashboard" class="btn btn-outline btn-rounded btn-primary btn-4 btn-icon-effect-1" target="_blank">
+											<span class="wrap">
+												<span>Admin</span>
+												<i class="fas fa-user"></i>
+											</span>
+										</a>
+<?php
+									}
+?>
 								</div>
 								<button class="header-btn-collapse-nav mx-3" data-toggle="collapse" data-target=".header-nav-main nav">
 									<span class="hamburguer">
