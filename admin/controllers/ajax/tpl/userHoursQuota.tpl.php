@@ -16,7 +16,7 @@ if(!empty($_POST['quota']['rows'])) {
 
 ?>
 
-<div class="col-md-3">
+<div class="col-md-4">
 	<section class="card mb-4">
 		<header class="card-header">
 			<h2 class="card-title">Normal Hours</h2>
@@ -26,17 +26,7 @@ if(!empty($_POST['quota']['rows'])) {
 		</div>
 	</section>
 </div>
-<div class="col-md-3">
-	<section class="card mb-4">
-		<header class="card-header">
-			<h2 class="card-title">Peak Hours</h2>
-		</header>
-		<div class="card-body">
-			<?php echo $peakHoursQuota; ?>
-		</div>
-	</section>
-</div>
-<div class="col-md-3">
+<div class="col-md-4">
 	<section class="card mb-4">
 		<header class="card-header">
 			<h2 class="card-title">Boardroom Hours</h2>
@@ -46,7 +36,7 @@ if(!empty($_POST['quota']['rows'])) {
 		</div>
 	</section>
 </div>
-<div class="col-md-3">
+<div class="col-md-4">
 	<section class="card mb-4">
 		<header class="card-header">
 			<h2 class="card-title">Un-Staffed Hours</h2>
