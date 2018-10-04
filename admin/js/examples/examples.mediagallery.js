@@ -6,7 +6,6 @@
 	$(document).on('change', '.mg-option input[type=checkbox]', function( ev ) {
 		var wrapper = $(this).parents('.thumbnail');
 		if($(this).is(':checked')) {
-			console.log($(this).val());
 			wrapper.addClass('thumbnail-selected');
 		} else {
 			wrapper.removeClass('thumbnail-selected');

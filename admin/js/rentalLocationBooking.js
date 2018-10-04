@@ -145,13 +145,12 @@ $('.booking-schedule-form').each(function(){
 			requestData.to = moment.utc(moment(requestData.bookingForDate + " " + requestData.timeTo, "YYYY-MM-DD h:mm:ss A")).valueOf();
 			// requestData.bookingForDate = moment(requestData.bookingForDate, "YYYY-MM-DD");
 			requestData.timezone = moment.tz.guess();
-
 			// Ajax Submit
 			$.ajax({
 				type: 'POST',
 				url: $form.attr('action'),
 				data: requestData
-			}).always((data, textStatus, jqXHR) => {
+			}).always( async (data, textStatus, jqXHR) => {
 				data = JSON.parse(data);
 				if(!data || data.status != 200) {
 					if(data.body && data.body.error && data.body.error.length) {
@@ -170,6 +169,8 @@ $('.booking-schedule-form').each(function(){
 						});
 					}
 				} else {
+
+					$('#calendar').fullCalendar('refetchEvents');
 					
     				showOfficeLocationBookings(requestData.rentalLocationId, moment.utc(moment($("#bookingForDate").val() + " 00:00:01", "YYYY-MM-DD HH:mm:ss")).valueOf(), moment.utc(moment($("#bookingForDate").val() + " 23:59:59", "YYYY-MM-DD HH:mm:ss")).valueOf());
 					refreshUserQuota();

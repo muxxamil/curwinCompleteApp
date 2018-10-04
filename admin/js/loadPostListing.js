@@ -22,7 +22,6 @@ function deletePostButtonClick(ids) {
 }
 
 function deleteSelectedPostsButtonClick() {
-	console.log(ids);
 }
 
 function deleteBlogPost() {

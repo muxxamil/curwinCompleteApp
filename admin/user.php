@@ -16,6 +16,8 @@
 		$params['id'] 		= $_GET['id'];
 		$user_designations 	= Users::get_designations();
 		$user_list 			= Users::get_users($params);
+
+		$user_quota =  Users::get_user_quota(['id' => $_GET['id']]);
 	}
 
 	$user_designations = $user_designations['body']->rows;
@@ -53,6 +55,10 @@
 <?php
 											} else {
 												$user_obj = current($user_list['body']->rows);
+												$user_quota = (!empty($user_quota['body']) && !empty($user_quota['body']->rows)) ? current($user_quota['body']->rows) : stdclass();
+												// $user_obj->normalHours 		= $user_quota->normalHours;
+												// $user_obj->boardroomHours 	= $user_quota->boardroomHours;
+												// $user_obj->unStaffedHours 	= $user_quota->unStaffedHours;
 ?>
 												<div class="form-group row">
 													<label class="col-lg-3 control-label text-lg-right pt-2" for="inputDefault">Name: </label>
@@ -99,6 +105,24 @@
 ?>
 														</select>
 													</div>
+												</div>
+
+												<div class="form-group row">
+													<div class="col-lg-4">
+														<label class="control-label text-lg-right pt-2" for="inputDefault">Normal Hours: </label>
+														<input type="number" min=0 name = "normalHours" class="form-control" id="normalHours" value="<?php echo $user_quota->normalHours; ?>">
+													</div>
+
+													<div class="col-lg-4">
+														<label class="control-label text-lg-right pt-2" for="inputDefault">Boardroom Hours: </label>
+														<input type="number" min=0 name = "boardroomHours" class="form-control" id="boardroomHours" value="<?php echo $user_quota->boardroomHours; ?>">
+													</div>
+
+													<div class="col-lg-4">
+														<label class="control-label text-lg-right pt-2" for="inputDefault">UnStaffed Hours: </label>
+														<input type="number" min=0 name = "unStaffedHours" class="form-control" id="unStaffedHours" value="<?php echo $user_quota->unStaffedHours; ?>">
+													</div>
+
 												</div>
 
 												<div class="form-group row">

@@ -43,8 +43,6 @@ async function getLatestEvents() {
 					eventsArr.push(tempObj);
 				}
 			}
-			console.log(data.body.rows);
-			// eventsArr = data.body.rows;
 		}
 	});
 
@@ -84,7 +82,7 @@ async function getLatestEvents() {
 		var m = date.getMonth();
 		var y = date.getFullYear();
 
-		let eventsArr = await getLatestEvents();
+		// let eventsArr = await getLatestEvents();
 
 		$calendar.fullCalendar({
 			header: {
@@ -104,13 +102,48 @@ async function getLatestEvents() {
 			  month:    'Monthly View'
 			},
 			contentHeight: 450,
+			eventSources: [
+
+			    // your event source
+			    {
+			      events: await getLatestEvents()
+			  	}
+		  	],
+
+			eventRender: function(eventObj, element, view) {
+				if (view.name == 'listDay') {
+		            element.find(".fc-list-item-time").append(`<i data-id=${eventObj.id} class="closeon fas fa-times-circle" style="display: inline-block;border-radius: 60px;box-shadow: 0px 0px 2px #888;padding: 0.2em 0.3em;"></i>`);
+		        } else {
+		            element.find(".fc-content").prepend(`<i data-id=${eventObj.id} class="closeon fas fa-times-circle" style="display: inline-block;border-radius: 60px;box-shadow: 0px 0px 2px #888;padding: 0.2em 0.3em;"></i>`);
+		        }
+		        element.find(".closeon").on('click', function() {
+		            $('#calendar').fullCalendar('removeEvents',eventObj._id);
+		            $('#deleteEventId').val($(this).data('id'));
+		            $.magnificPopup.open({
+					  items: {
+					    src: '#deleteEventConfirmation', // can be a HTML string, jQuery object, or CSS selector
+					  },
+					  type: 'inline'
+					});
+		        });
+		      element.popover({
+		        title: eventObj.title,
+		        content: 'From: ' + eventObj.from + '<br/>To: ' + eventObj.to + '<br/>By: ' + eventObj.by,
+		        trigger: 'hover',
+		        placement: 'top',
+            	html: true,
+		        container: 'body'
+		      });
+		    } ,
 
 			editable: false,
 			showNonCurrentDates: false,
 			droppable: false, // this allows things to be dropped onto the calendar !!!
-			events: function( start, end, timezone, callback ) { alert(start.unix() + " " + end.unix() + " " + timezone) },
+			events: async function( start, end, timezone, callback ) 
+			{ 
+				return callback(await getLatestEvents());
+			},
 			dayClick: function(date, jsEvent, view, resourceObj) {
-				console.log(date.valueOf());
 				if(date.diff(moment().format('YYYY-MM-DD')) >= 0) {
 					$('#bookedSlots').html('');
 					$('#staffedHours').html('');
@@ -134,7 +167,7 @@ async function getLatestEvents() {
 				}
 			},
 			eventLimit: 2,
-			eventMouseover: function (data, event, view) {
+			/*eventMouseover: function (data, event, view) {
 
             var tooltip = '<div class="tooltiptopicevent" style="width:auto;height:auto;background:#c1c1c1;position:absolute;z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%;">' + 'Room: ' + data.title + '</br>' + 'From: ' + data.from + '</br>' + 'To: ' + data.to + '</br>' + 'By: ' + data.by + '</div>';
 
@@ -149,7 +182,7 @@ async function getLatestEvents() {
             });
 
 
-        },
+        },*/
         eventMouseout: function (data, event, view) {
             $(this).css('z-index', 8);
 
@@ -165,7 +198,7 @@ async function getLatestEvents() {
 		    console.log($('#calendar').fullCalendar('updateEvent', event));
 
 		  },*/
-			events: eventsArr
+			// events: eventsArr
 		});
 
 		// FIX INPUTS TO BOOTSTRAP VERSIONS
@@ -189,6 +222,59 @@ async function getLatestEvents() {
 	});
 
 }).apply(this, [jQuery]);
+
+$('.delete-schedule-form').each(function(){
+	$(this).validate({
+		submitHandler: function(form) {
+			var $form = $(form);
+
+			// Fields Data
+			var formData = $form.serializeArray(),
+				requestData = {};
+
+			$(formData).each(function(index, obj){
+			    requestData[obj.name] = obj.value;
+			});
+
+			// Ajax Submit
+			$.ajax({
+				type: 'POST',
+				url: $form.attr('action'),
+				data: requestData
+			}).always((data, textStatus, jqXHR) => {
+				data = JSON.parse(data);
+				if(!data || data.status != 200) {
+					if(data.body && data.body.error && data.body.error.length) {
+						for (var i = data.body.error.length - 1; i >= 0; i--) {
+							new PNotify({
+								title: 'Error!',
+								text: data.body.error[i],
+								type: 'error'
+							});
+						}
+					} else {
+						new PNotify({
+							title: 'Error!',
+							text: "Something went wrong, Please contact Support.",
+							type: 'error'
+						});
+					}
+				} else {
+
+					$('#calendar').fullCalendar('refetchEvents');
+					refreshUserQuota();
+					closePopup();
+					
+					new PNotify({
+						title: 'Success!',
+						text: "Location has been booked",
+						type: 'success'
+					});
+				}
+			});
+		}
+	});
+});
 
 // module.exports = {
 // 	initCalendar: initCalendar()

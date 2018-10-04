@@ -18,3 +18,7 @@ $("#logout").click(function(){
 	});
 
 });
+
+function closePopup() {
+  $.magnificPopup.close();
+}

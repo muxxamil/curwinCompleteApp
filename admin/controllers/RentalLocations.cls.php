@@ -36,6 +36,13 @@ class RentalLocations
 		$response = CallAPI('GET', 'locationBookings', "", $params);
 		return $response;
 	}
+
+	function delete_booking($params) 
+	{
+		global $API_URL;
+		$response = CallAPI('DELETE', 'locationBookings', "$params[deleteEventId]", $params);
+		return $response;
+	}
 }
 
 ?>
