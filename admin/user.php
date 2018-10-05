@@ -61,21 +61,28 @@
 												// $user_obj->unStaffedHours 	= $user_quota->unStaffedHours;
 ?>
 												<div class="form-group row">
-													<label class="col-lg-3 control-label text-lg-right pt-2" for="inputDefault">Name: </label>
+													<label class="col-lg-3 control-label text-lg-right pt-2" for="firstName">First Name: </label>
 													<div class="col-lg-6">
-														<input type="text" name = "name" class="form-control" id="name" value="<?php echo $user_obj->name; ?>" required>
+														<input type="text" name = "firstName" class="form-control" id="firstName" value="<?php echo $user_obj->firstName; ?>" required>
 													</div>
 												</div>
 
 												<div class="form-group row">
-													<label class="col-lg-3 control-label text-lg-right pt-2" for="inputDefault">Email: </label>
+													<label class="col-lg-3 control-label text-lg-right pt-2" for="lastName">Last Name: </label>
+													<div class="col-lg-6">
+														<input type="text" name = "lastName" class="form-control" id="lastName" value="<?php echo $user_obj->lastName; ?>" required>
+													</div>
+												</div>
+
+												<div class="form-group row">
+													<label class="col-lg-3 control-label text-lg-right pt-2" for="email">Email: </label>
 													<div class="col-lg-6">
 														<input type="email" name = "email" class="form-control" id="email" value="<?php echo $user_obj->email; ?>" required>
 													</div>
 												</div>
 
 												<div class="form-group row">
-													<label class="col-lg-3 control-label text-lg-right pt-2" for="inputDefault">Cell: </label>
+													<label class="col-lg-3 control-label text-lg-right pt-2" for="cell">Cell: </label>
 													<div class="col-lg-6">
 														<input type="text" name = "cell" class="form-control" id="cell" value="<?php echo $user_obj->cell; ?>">
 													</div>
@@ -109,17 +116,17 @@
 
 												<div class="form-group row">
 													<div class="col-lg-4">
-														<label class="control-label text-lg-right pt-2" for="inputDefault">Normal Hours: </label>
+														<label class="control-label text-lg-right pt-2" for="normalHours">Normal Hours: </label>
 														<input type="number" min=0 name = "normalHours" class="form-control" id="normalHours" value="<?php echo $user_quota->normalHours; ?>">
 													</div>
 
 													<div class="col-lg-4">
-														<label class="control-label text-lg-right pt-2" for="inputDefault">Boardroom Hours: </label>
+														<label class="control-label text-lg-right pt-2" for="boardroomHours">Boardroom Hours: </label>
 														<input type="number" min=0 name = "boardroomHours" class="form-control" id="boardroomHours" value="<?php echo $user_quota->boardroomHours; ?>">
 													</div>
 
 													<div class="col-lg-4">
-														<label class="control-label text-lg-right pt-2" for="inputDefault">UnStaffed Hours: </label>
+														<label class="control-label text-lg-right pt-2" for="unStaffedHours">UnStaffed Hours: </label>
 														<input type="number" min=0 name = "unStaffedHours" class="form-control" id="unStaffedHours" value="<?php echo $user_quota->unStaffedHours; ?>">
 													</div>
 

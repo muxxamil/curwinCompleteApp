@@ -9,6 +9,10 @@
 	include_once('config/api_caller.php');
 	include_once('controllers/Users.cls.php');
 
+	if (session_status() == PHP_SESSION_NONE) {
+	    session_start();
+	}
+
 	$user_list 	= Users::get_users();
 
 ?>
@@ -29,7 +33,8 @@
 											<thead>
 												<tr>
 													<th>ID</th>
-													<th>Name</th>
+													<th>First Name</th>
+													<th>Last Name</th>
 													<th>Email</th>
 													<th>Designation</th>
 													<th>Actions</th>
@@ -42,12 +47,20 @@
 ?>
 												<tr>
 													<td><?php echo $value->id; ?></td>
-													<td><?php echo $value->name; ?></td>
+													<td><?php echo $value->firstName; ?></td>
+													<td><?php echo $value->lastName; ?></td>
 													<td><?php echo $value->email; ?></td>
 													<td><?php echo $value->UserDesignation->title; ?></td>
 													<td class="actions">
 														<a href="user.php?id=<?php echo $value->id; ?>" target = "blank" class="on-default"><i class="fas fa-pencil-alt"></i></a>
-														<a href="#" class="on-default"><i class="far fa-trash-alt"></i></a>
+<?php
+														if(in_array($PRIVILEGES['CAN_RESET_ALL_PASSWORD'], $_SESSION['privileges']) || ($value->id == $_SESSION['userInfo']->id && in_array($PRIVILEGES['CAN_RESET_MY_PASSWORD'], $_SESSION['privileges'])))
+														{
+?>
+															<a onclick="return openResetPasswordModal(<?php echo $value->id; ?>)" class="on-default"><i class="fas fa-key"></i></a>
+<?php
+														}
+?>
 													</td>
 												</tr>
 <?php
@@ -62,6 +75,42 @@
 							</div>
 						</div>
 					<!-- end: page -->
+					<div id="changePasswordModal" class="modal-block modal-block-sm mfp-hide">
+						<section class="card">
+							<header class="card-header">
+								<h2 class="card-title">Change Password</h2>
+							</header>
+							<div class="card-body">
+								<form class="change-password-form" action = "controllers/ajax/change_password.php" method="post">
+									<input type="hidden" name="userId" id="userId" value=""/>
+									<div class="form-row">
+										<div class="form-group col-md-12">
+											<label for="inputState">Password</label>
+											<div class="input-group">
+												<input type="text" name="password" class="form-control" required>
+											</div>
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="form-group col-md-12">
+											<label for="inputState">Confirm Password</label>
+											<div class="input-group">
+												<input type="text" name="confirmPassword" class="form-control" required>
+											</div>
+										</div>
+									</div>
+									<hr/>
+									<div class="row">
+										<div class="col-md-12 text-right">
+											<button type="submit" class="btn btn-primary modal-confirm">Confirm</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</section>
+					</div>
+				</section>
+			</div>
 				</section>
 			</div>
 
@@ -76,6 +125,9 @@
 		<script src="vendor/datatables/extras/TableTools/JSZip-2.5.0/jszip.min.js"></script>
 		<script src="vendor/datatables/extras/TableTools/pdfmake-0.1.32/pdfmake.min.js"></script>
 		<script src="vendor/datatables/extras/TableTools/pdfmake-0.1.32/vfs_fonts.js"></script>
-		<script src="js/examples/examples.datatables.tabletools.js"></script>';
+		<script src="js/examples/examples.datatables.tabletools.js"></script>
+		<script src="vendor/jquery-validation/jquery.validate.js"></script>
+		<script src="js/examples/examples.validation.js"></script>
+		<script src="js/forms/add-edit-user.js"></script>';
 	include('includes/footer.php');
 ?>

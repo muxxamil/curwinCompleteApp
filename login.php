@@ -91,22 +91,22 @@
 							</div>
 							<div class="form-row">
 								<div class="form-group col-lg-6">
-									<label for="name">NAME</label>
-									<input type="text" value="" maxlength="100" class="form-control bg-light-5 rounded border-0 text-1" name="name" id="name" required>
+									<label for="firstName">FIRST NAME</label>
+									<input type="text" value="" maxlength="100" class="form-control bg-light-5 rounded border-0 text-1" name="firstName" id="firstName" required>
 								</div>
 								<div class="form-group col-lg-6">
-									<label for="frmRegisterEmail">EMAIL</label>
-									<input type="email" value="" maxlength="100" class="form-control bg-light-5 rounded border-0 text-1" name="email" id="frmRegisterEmail" required>
+									<label for="lastName">LAST NAME</label>
+									<input type="text" value="" maxlength="100" class="form-control bg-light-5 rounded border-0 text-1" name="lastName" id="lastName" required>
 								</div>
 							</div>
 							<div class="form-row mb-5">
 								<div class="form-group col-lg-6">
-									<label for="cell">CONTACT NUMBER</label>
-									<input type="text" value="" class="form-control bg-light-5 rounded border-0 text-1" name="cell" id="cell" required>
+									<label for="frmRegisterEmail">EMAIL</label>
+									<input type="email" value="" maxlength="100" class="form-control bg-light-5 rounded border-0 text-1" name="email" id="frmRegisterEmail" required>
 								</div>
 								<div class="form-group col-lg-6">
-									<label for="frmRegisterPassword">PASSWORD</label>
-									<input type="password" value="" class="form-control bg-light-5 rounded border-0 text-1" name="password" id="frmRegisterPassword" required>
+									<label for="cell">CONTACT NUMBER</label>
+									<input type="text" value="" class="form-control bg-light-5 rounded border-0 text-1" name="cell" id="cell">
 								</div>
 							</div>
 							<div class="row align-items-center">

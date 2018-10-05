@@ -6,7 +6,7 @@ $("#logout").click(function(){
 	    dataType: "json",
 	    success: (data) => {
 		    if(data) {
-		    	window.location = "./";
+		    	window.location = "../login";
 		    } else {
 		    	new PNotify({
 					title: 'Error!',

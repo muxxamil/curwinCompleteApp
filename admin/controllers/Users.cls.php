@@ -16,6 +16,13 @@ class Users
 		return $response;
 	}
 
+	function change_password($params = []) 
+	{
+		global $API_URL;
+		$response = CallAPI('PUT', 'users', "$params[userId]/resetPassword", $params);
+		return $response;
+	}
+
 	function get_user_quota($params = []) 
 	{
 		global $API_URL;

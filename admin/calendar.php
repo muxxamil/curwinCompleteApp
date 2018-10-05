@@ -101,23 +101,24 @@
 			</div>
 
 			<div id="deleteEventConfirmation" class="modal-block modal-block-sm mfp-hide">
-						<section class="card">
-							<header class="card-header">
-								<h2 class="card-title">Are you sure?</h2>
-							</header>
-							<div class="card-body">
-								<form class="delete-schedule-form" action = "controllers/ajax/deleteEvent.php" method="post">
-									<input type="hidden" name="deleteEventId" id="deleteEventId" value=""/>
-									<div class="row">
-										<div class="col-md-12 text-right">
-											<button type="submit" class="btn btn-primary modal-confirm">Yes</button>
-											<button type="button" class="btn btn-default" onClick="closePopup();">No</button>
-										</div>
-									</div>
-								</form>
+				<section class="card">
+					<header class="card-header">
+						<h2 class="card-title">Are you sure?</h2>
+					</header>
+					<div class="card-body">
+						<form class="delete-schedule-form" action = "controllers/ajax/deleteEvent.php" method="post">
+							<input type="hidden" name="deleteEventId" id="deleteEventId" value=""/>
+							<div class="row">
+								<div class="col-md-12 text-right">
+									<button type="submit" class="btn btn-primary modal-confirm">Yes</button>
+									<button type="button" class="btn btn-default" onClick="closePopup();">No</button>
+								</div>
 							</div>
-						</section>
+						</form>
 					</div>
+				</section>
+			</div>
+					
 				</section>
 			</div>
 

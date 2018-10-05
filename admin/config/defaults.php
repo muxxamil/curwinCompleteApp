@@ -12,7 +12,9 @@ $PRIVILEGES = array(
 	"CAN_MANAGE_BLOG" 			=> "CMB",
 	"CAN_MANAGE_SCHEDULE" 		=> "CMS",
 	"CAN_MANAGE_ALL_SCHEDULE" 	=> "CMAS",
-	"CAN_MANAGE_MY_SCHEDULE" 	=> "CMMS"
+	"CAN_MANAGE_MY_SCHEDULE" 	=> "CMMS",
+	"CAN_RESET_MY_PASSWORD" 	=> "CRMP",
+	"CAN_RESET_ALL_PASSWORD" 	=> "CRAP"
 );
 
 $DEFINITION_PRIVILEGES = array(
@@ -27,7 +29,7 @@ $PAGES_LINK = array(
 	"User" 		=> "usersList",
 	"Blog" 		=> "postsList",
 	"Calendar" 	=> "calendar",
-	"Login"		=> "index"
+	"Login"		=> "../login"
 );
 
 $USER_DESIGNATION = array(
