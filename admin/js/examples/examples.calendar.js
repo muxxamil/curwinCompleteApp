@@ -139,10 +139,7 @@ async function getLatestEvents() {
 			editable: false,
 			showNonCurrentDates: false,
 			droppable: false, // this allows things to be dropped onto the calendar !!!
-			events: async function( start, end, timezone, callback ) 
-			{ 
-				return callback(await getLatestEvents());
-			},
+			
 			dayClick: function(date, jsEvent, view, resourceObj) {
 				if(date.diff(moment().format('YYYY-MM-DD')) >= 0) {
 					$('#bookedSlots').html('');
