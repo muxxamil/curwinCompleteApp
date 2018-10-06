@@ -1,26 +1,40 @@
+<?php
 
+$normalHours 	= 0;
+$boardroomHours = 0;
+$unstaffedHours = 0;
+
+if(!empty($_POST['data'])) {
+	$data 			= current($_POST['data']);
+	$normalHours 	= $data['normalHours'];
+	$boardroomHours = $data['boardroomHours'];
+	$unstaffedHours = $data['unStaffedHours'];
+}
+
+?>
 <section class="card">
 	<header class="card-header">
-		<h2 class="card-title">Add Extra Hours Quota</h2>
+		<h2 class="card-title">Add Extra Hours Quota (Current Week)</h2>
 	</header>
 	<div class="card-body">
-		<form class="change-password-form" action = "controllers/ajax/change_password.php" method="post">
+		<form class="extra-hours-quota-form" action = "controllers/ajax/quota_extension.php" method="post">
 			<input type="hidden" name="userId" id="userId" value="<?php echo $_POST['id'] ?>"/>
-			<div class="form-row">
-				<div class="form-group col-md-12">
-					<label for="inputState">Password</label>
-					<div class="input-group">
-						<input type="text" name="password" class="form-control" required>
-					</div>
+			<div class="form-group row">
+				<div class="col-lg-4">
+					<label class="control-label text-lg-right pt-2" for="normalHours">Normal </label>
+					<input type="number" min=0 name = "normalHours" class="form-control" id="normalHours" value="<?php echo $normalHours; ?>" required step="0.1">
 				</div>
-			</div>
-			<div class="form-row">
-				<div class="form-group col-md-12">
-					<label for="inputState">Confirm Password</label>
-					<div class="input-group">
-						<input type="text" name="confirmPassword" class="form-control" required>
-					</div>
+
+				<div class="col-lg-4">
+					<label class="control-label text-lg-right pt-2" for="boardroomHours">Boardroom </label>
+					<input type="number" min=0 name = "boardroomHours" class="form-control" id="boardroomHours" value="<?php echo $boardroomHours; ?>" required step="0.1">
 				</div>
+
+				<div class="col-lg-4">
+					<label class="control-label text-lg-right pt-2" for="unStaffedHours">UnStaffed </label>
+					<input type="number" min=0 name = "unStaffedHours" class="form-control" id="unStaffedHours" value="<?php echo $unstaffedHours; ?>" required step="0.1">
+				</div>
+
 			</div>
 			<hr/>
 			<div class="row">

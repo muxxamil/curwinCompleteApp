@@ -3,7 +3,7 @@ $(document).ready(function(){
 });
 
 $("#officeLocationDropdown").change(function () {
-    showOfficeLocationBookings(this.value, moment.utc(moment($("#bookingForDate").val() + " 00:00:01", "YYYY-MM-DD HH:mm:ss")).valueOf(), moment.utc(moment($("#bookingForDate").val() + " 23:59:59", "YYYY-MM-DD HH:mm:ss")).valueOf());
+    showOfficeLocationBookings(this.value, moment.utc(moment($("#bookingForDate").val() + " 00:00:00", "YYYY-MM-DD HH:mm:ss")).valueOf(), moment.utc(moment($("#bookingForDate").val() + " 23:59:59", "YYYY-MM-DD HH:mm:ss")).valueOf());
     showOfficeLocationStaffHours(this.value, moment.utc(moment($("#bookingForDate").val(), "YYYY-MM-DD HH:mm:ss")).valueOf());
 });
 

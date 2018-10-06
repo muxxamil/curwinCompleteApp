@@ -63,23 +63,44 @@ function openQuotaManagementModal(id) {
 	$.ajax({
 		type: 'GET',
 		url: 'controllers/ajax/get_user_quota.php',
-		data: {id: id},
+		data: {id: id, typeId: 1},
 	}).always((data, textStatus, jqXHR) => {
-		$.ajax({
-		type: 'POST',
-		url: 'controllers/ajax/tpl/quotaManagement.tpl.php',
-		data: {data: data},
-	    dataType: "html",
-		}).always((data, textStatus, jqXHR) => {
-			$('#quotaManagementModal').html(data);
-			console.log(data);
-			$.magnificPopup.open({
-			  items: {
-			    src: '#quotaManagementModal', // can be a HTML string, jQuery object, or CSS selector
-			  },
-			  type: 'inline'
-			});
-		});
+
+		data = JSON.parse(data);
+		if(!data || data.status != 200) {
+			if(data.body && data.body.error && data.body.error.length) {
+				for (var i = data.body.error.length - 1; i >= 0; i--) {
+					new PNotify({
+						title: 'Error!',
+						text: data.body.error[i],
+						type: 'error'
+					});
+				}
+			} else {
+				new PNotify({
+					title: 'Error!',
+					text: "Something went wrong, Please contact Support.",
+					type: 'error'
+				});
+			}
+		} else {
+
+			$.ajax({
+			type: 'POST',
+			url: 'controllers/ajax/tpl/quotaManagement.tpl.php',
+			data: {data: data.body.rows},
+		    dataType: "html",
+			}).always((data, textStatus, jqXHR) => {
+				$('#quotaManagementModal').html(data);
+				console.log(data);
+				$.magnificPopup.open({
+				  items: {
+				    src: '#quotaManagementModal', // can be a HTML string, jQuery object, or CSS selector
+				  },
+				  type: 'inline'
+				});			
+			});	
+		}
 	});
 
 }
@@ -105,6 +126,59 @@ $('.change-password-form').each(function(){
 				});
 				return;
 			}
+
+			// Ajax Submit
+			$.ajax({
+				type: 'POST',
+				url: $form.attr('action'),
+				data: requestData
+			}).always((data, textStatus, jqXHR) => {
+				data = JSON.parse(data);
+				if(!data || data.status != 200) {
+					if(data.body && data.body.error && data.body.error.length) {
+						for (var i = data.body.error.length - 1; i >= 0; i--) {
+							new PNotify({
+								title: 'Error!',
+								text: data.body.error[i],
+								type: 'error'
+							});
+						}
+					} else {
+						new PNotify({
+							title: 'Error!',
+							text: "Something went wrong, Please contact Support.",
+							type: 'error'
+						});
+					}
+				} else {
+
+					$.magnificPopup.close();
+
+					$('#changePasswordModal').html('');
+					
+					new PNotify({
+						title: 'Success!',
+						text: "Password has been Changed",
+						type: 'success'
+					});
+				}
+			});
+		}
+	});
+});
+
+$('.extra-hours-quota-form').each(function(){
+	$(this).validate({
+		submitHandler: function(form) {
+			var $form = $(form);
+
+			// Fields Data
+			var formData = $form.serializeArray(),
+				requestData = {};
+
+			$(formData).each(function(index, obj){
+			    requestData[obj.name] = obj.value;
+			});
 
 			// Ajax Submit
 			$.ajax({

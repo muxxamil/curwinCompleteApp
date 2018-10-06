@@ -100,13 +100,6 @@ async function getLatestEvents() {
 			  month:    'Monthly View'
 			},
 			contentHeight: 450,
-			eventSources: [
-
-			    // your event source
-			    {
-			      events: await getLatestEvents()
-			  	}
-		  	],
 
 			eventRender: function(eventObj, element, view) {
 				if (view.name == 'listDay') {
@@ -137,7 +130,10 @@ async function getLatestEvents() {
 			editable: false,
 			showNonCurrentDates: false,
 			droppable: false, // this allows things to be dropped onto the calendar !!!
-			
+			events: async function( start, end, timezone, callback ) 
+			{ 
+				return callback(await getLatestEvents());
+			},
 			dayClick: function(date, jsEvent, view, resourceObj) {
 				if(date.diff(moment().format('YYYY-MM-DD')) >= 0) {
 					$('#bookedSlots').html('');
@@ -230,7 +226,7 @@ $('.delete-schedule-form').each(function(){
 					
 					new PNotify({
 						title: 'Success!',
-						text: "Location has been booked",
+						text: "Booking has been Cancelled",
 						type: 'success'
 					});
 				}

@@ -64,7 +64,7 @@
 														if(in_array($PRIVILEGES['CAN_CHANGE_ALL_USER_QUOTA'], $_SESSION['privileges']))
 														{
 ?>
-															<a onclick="return openQuotaManagementModal(<?php echo $value->id; ?>)" class="on-default"><i class="fas fa-key"></i></a>
+															<a onclick="return openQuotaManagementModal(<?php echo $value->id; ?>)" class="on-default"><i class="fas fa-clock"></i></a>
 <?php
 														}
 ?>
