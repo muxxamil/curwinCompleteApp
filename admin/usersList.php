@@ -23,7 +23,6 @@
 									<header class="card-header">
 										<div class="card-actions">
 											<a href="#" class="card-action card-action-toggle" data-card-toggle></a>
-											<a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
 										</div>
 						
 										<h2 class="card-title">Users List</h2>
@@ -61,6 +60,14 @@
 <?php
 														}
 ?>
+<?php
+														if(in_array($PRIVILEGES['CAN_CHANGE_ALL_USER_QUOTA'], $_SESSION['privileges']))
+														{
+?>
+															<a onclick="return openQuotaManagementModal(<?php echo $value->id; ?>)" class="on-default"><i class="fas fa-key"></i></a>
+<?php
+														}
+?>
 													</td>
 												</tr>
 <?php
@@ -76,38 +83,11 @@
 						</div>
 					<!-- end: page -->
 					<div id="changePasswordModal" class="modal-block modal-block-sm mfp-hide">
-						<section class="card">
-							<header class="card-header">
-								<h2 class="card-title">Change Password</h2>
-							</header>
-							<div class="card-body">
-								<form class="change-password-form" action = "controllers/ajax/change_password.php" method="post">
-									<input type="hidden" name="userId" id="userId" value=""/>
-									<div class="form-row">
-										<div class="form-group col-md-12">
-											<label for="inputState">Password</label>
-											<div class="input-group">
-												<input type="text" name="password" class="form-control" required>
-											</div>
-										</div>
-									</div>
-									<div class="form-row">
-										<div class="form-group col-md-12">
-											<label for="inputState">Confirm Password</label>
-											<div class="input-group">
-												<input type="text" name="confirmPassword" class="form-control" required>
-											</div>
-										</div>
-									</div>
-									<hr/>
-									<div class="row">
-										<div class="col-md-12 text-right">
-											<button type="submit" class="btn btn-primary modal-confirm">Confirm</button>
-										</div>
-									</div>
-								</form>
-							</div>
-						</section>
+
+					</div>
+
+					<div id="quotaManagementModal" class="modal-block modal-block-sm mfp-hide">
+
 					</div>
 				</section>
 			</div>

@@ -2,8 +2,8 @@
 
 error_reporting(0);
 
-// $API_URL = 'localhost:3002';
-$API_URL = '162.255.85.99:3001';
+$API_URL = 'localhost:3002';
+// $API_URL = '162.255.85.99:3001';
 // $IMAGE_PREFIX = 'http://www.curwinbusinesscentre.com/img/landing/';
 
 $PRIVILEGES = array(
@@ -14,7 +14,8 @@ $PRIVILEGES = array(
 	"CAN_MANAGE_ALL_SCHEDULE" 	=> "CMAS",
 	"CAN_MANAGE_MY_SCHEDULE" 	=> "CMMS",
 	"CAN_RESET_MY_PASSWORD" 	=> "CRMP",
-	"CAN_RESET_ALL_PASSWORD" 	=> "CRAP"
+	"CAN_RESET_ALL_PASSWORD" 	=> "CRAP",
+	"CAN_CHANGE_ALL_USER_QUOTA" => "CCAUQ",
 );
 
 $DEFINITION_PRIVILEGES = array(

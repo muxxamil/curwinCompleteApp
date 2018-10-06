@@ -82,8 +82,6 @@ async function getLatestEvents() {
 		var m = date.getMonth();
 		var y = date.getFullYear();
 
-		// let eventsArr = await getLatestEvents();
-
 		$calendar.fullCalendar({
 			header: {
 				left: 'title',
@@ -163,39 +161,7 @@ async function getLatestEvents() {
 					});
 				}
 			},
-			eventLimit: 2,
-			/*eventMouseover: function (data, event, view) {
-
-            var tooltip = '<div class="tooltiptopicevent" style="width:auto;height:auto;background:#c1c1c1;position:absolute;z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%;">' + 'Room: ' + data.title + '</br>' + 'From: ' + data.from + '</br>' + 'To: ' + data.to + '</br>' + 'By: ' + data.by + '</div>';
-
-            $("body").append(tooltip);
-            $(this).mouseover(function (e) {
-                $(this).css('z-index', 10000);
-                $('.tooltiptopicevent').fadeIn('500');
-                $('.tooltiptopicevent').fadeTo('10', 1.9);
-            }).mousemove(function (e) {
-                $('.tooltiptopicevent').css('top', e.pageY + 10);
-                $('.tooltiptopicevent').css('left', e.pageX + 20);
-            });
-
-
-        },*/
-        eventMouseout: function (data, event, view) {
-            $(this).css('z-index', 8);
-
-            $('.tooltiptopicevent').remove();
-
-        },
-		  /*eventClick: function(event, element) {
-
-		    event.title = "CLICKED!";
-		    console.log(event);
-
-		    console.log($('#calendar').fullCalendar('removeEvents', 999))
-		    console.log($('#calendar').fullCalendar('updateEvent', event));
-
-		  },*/
-			// events: eventsArr
+			eventLimit: 2
 		});
 
 		// FIX INPUTS TO BOOTSTRAP VERSIONS

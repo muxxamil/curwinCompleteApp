@@ -34,6 +34,14 @@ class Users
 		$response = CallAPI('GET', 'users', $actionStr, $params);
 		return $response;
 	}
+
+	function get_user_extended_weekly_quota($params = []) 
+	{
+		global $API_URL;
+
+		$response = CallAPI('GET', 'users', "$params[id]/extendedWeeklyQuota", $params);
+		return $response;
+	}
 }
 
 ?>

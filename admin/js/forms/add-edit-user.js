@@ -41,13 +41,47 @@ $('.add-edit-user').each(function(){
 });
 
 function openResetPasswordModal(id) {
-	$("#userId").val(id);
-	$.magnificPopup.open({
-	  items: {
-	    src: '#changePasswordModal', // can be a HTML string, jQuery object, or CSS selector
-	  },
-	  type: 'inline'
+	$.ajax({
+		type: 'POST',
+		url: 'controllers/ajax/tpl/resetPassword.tpl.php',
+		data: {id: id},
+	    dataType: "html",
+	}).always((data, textStatus, jqXHR) => {
+		$('#changePasswordModal').html(data);
+		console.log(data);
+		$.magnificPopup.open({
+		  items: {
+		    src: '#changePasswordModal', // can be a HTML string, jQuery object, or CSS selector
+		  },
+		  type: 'inline'
+		});
 	});
+
+}
+
+function openQuotaManagementModal(id) {
+	$.ajax({
+		type: 'GET',
+		url: 'controllers/ajax/get_user_quota.php',
+		data: {id: id},
+	}).always((data, textStatus, jqXHR) => {
+		$.ajax({
+		type: 'POST',
+		url: 'controllers/ajax/tpl/quotaManagement.tpl.php',
+		data: {data: data},
+	    dataType: "html",
+		}).always((data, textStatus, jqXHR) => {
+			$('#quotaManagementModal').html(data);
+			console.log(data);
+			$.magnificPopup.open({
+			  items: {
+			    src: '#quotaManagementModal', // can be a HTML string, jQuery object, or CSS selector
+			  },
+			  type: 'inline'
+			});
+		});
+	});
+
 }
 
 $('.change-password-form').each(function(){
@@ -98,6 +132,8 @@ $('.change-password-form').each(function(){
 				} else {
 
 					$.magnificPopup.close();
+
+					$('#changePasswordModal').html('');
 					
 					new PNotify({
 						title: 'Success!',
