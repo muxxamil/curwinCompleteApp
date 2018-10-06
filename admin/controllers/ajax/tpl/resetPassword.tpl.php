@@ -31,3 +31,6 @@
 		</form>
 	</div>
 </section>
+
+<script src="js/forms/add-edit-user.js"></script>
+

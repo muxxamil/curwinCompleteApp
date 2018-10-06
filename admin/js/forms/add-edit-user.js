@@ -63,7 +63,7 @@ function openQuotaManagementModal(id) {
 	$.ajax({
 		type: 'GET',
 		url: 'controllers/ajax/get_user_quota.php',
-		data: {id: id, typeId: 1},
+		data: {id: id, typeId: 2},
 	}).always((data, textStatus, jqXHR) => {
 
 		data = JSON.parse(data);
@@ -88,7 +88,7 @@ function openQuotaManagementModal(id) {
 			$.ajax({
 			type: 'POST',
 			url: 'controllers/ajax/tpl/quotaManagement.tpl.php',
-			data: {data: data.body.rows},
+			data: {id: id, data: data.body.rows},
 		    dataType: "html",
 			}).always((data, textStatus, jqXHR) => {
 				$('#quotaManagementModal').html(data);
@@ -180,6 +180,16 @@ $('.extra-hours-quota-form').each(function(){
 			    requestData[obj.name] = obj.value;
 			});
 
+			if(requestData.normalHours == 0 && requestData.boardroomHours == 0 && requestData.unStaffedHours == 0) {
+				new PNotify({
+					title: 'Error!',
+					text: "Atleast one extension is required for submission.",
+					type: 'error'
+				});
+
+				return;
+			}
+
 			// Ajax Submit
 			$.ajax({
 				type: 'POST',
@@ -207,7 +217,7 @@ $('.extra-hours-quota-form').each(function(){
 
 					$.magnificPopup.close();
 
-					$('#changePasswordModal').html('');
+					$('#quotaManagementModal').html('');
 					
 					new PNotify({
 						title: 'Success!',
