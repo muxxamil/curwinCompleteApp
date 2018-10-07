@@ -126,8 +126,6 @@
 
 $pageSpecificJS = '<script src="vendor/jquery-ui/jquery-ui.js"></script>
 					<script src="vendor/jqueryui-touch-punch/jqueryui-touch-punch.js"></script>
-					<script src="vendor/moment/moment.js"></script>
-					<script src="vendor/moment/moment-timezone.js"></script>
 					<script src="vendor/fullcalendar/fullcalendar.js"></script>
 					<script src="vendor/jquery-validation/jquery.validate.js"></script>
 					<script src="js/examples/examples.validation.js"></script>

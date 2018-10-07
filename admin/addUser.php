@@ -86,6 +86,20 @@
 												</div>
 
 												<div class="form-group row">
+													<label class="col-lg-3 control-label text-lg-right pt-2">Quota Expiry</label>
+													<div class="col-lg-6">
+														<div class="input-group">
+															<span class="input-group-prepend">
+																<span class="input-group-text">
+																	<i class="fas fa-calendar-alt"></i>
+																</span>
+															</span>
+															<input type="text" name="expiry" id="expiry" data-plugin-datepicker class="form-control">
+														</div>
+													</div>
+												</div>
+
+												<div class="form-group row">
 													<label class="col-lg-3 control-label text-lg-right pt-2 col-lg-3">Active: </label>
 													<div class="col-lg-9">
 														<div class="switch switch-sm switch-success">

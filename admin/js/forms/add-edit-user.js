@@ -13,6 +13,10 @@ $('.add-edit-user').each(function(){
 			    data[obj.name] = obj.value;
 			});
 
+			if(data.expiry) {
+				data.expiry = moment(data.expiry, 'MM/DD/YYYY').endOf('day').format("YYYY-MM-DD HH:mm:ss");
+			}
+
 			// Ajax Submit
 			$.ajax({
 				type: 'POST',
@@ -221,7 +225,7 @@ $('.extra-hours-quota-form').each(function(){
 					
 					new PNotify({
 						title: 'Success!',
-						text: "Password has been Changed",
+						text: "Weekly Quota has been updated",
 						type: 'success'
 					});
 				}

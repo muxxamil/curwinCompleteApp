@@ -11,21 +11,13 @@ $boardroomExtensionHoursQuota 	= 0;
 $offHoursQuota 	  				= "-";
 $offHoursExtensionQuota 	  	= 0;
 
-if(!empty($_POST['quota']['rows'])) {
-	$userQuota 			 = current($_POST['quota']['rows']);
+if(!empty($_POST['quota']['rows']['monthlyQuota'])) {
+	$monhlyData = $_POST['quota']['rows']['monthlyQuota'];
+}
 
-	if(($_POST['quota']['rows'][1])) {
-		$extendedHours 	 			= $_POST['quota']['rows'][1];
-		$normalExtensionHoursQuota 		= round($extendedHours['normalHours'], 2);
-		$peakExtensionHoursQuota 		= round($extendedHours['peakHours'], 2);
-		$boardroomExtensionHoursQuota 	= round($extendedHours['boardroomHours'], 2);
-		$offHoursExtensionQuota 		= round($extendedHours['unStaffedHours'], 2);
-	}
+if(!empty($_POST['quota']['rows']['weeklyQuota'])) {
 
-	$normalHoursQuota 	 = round($userQuota['normalHours'], 2);
-	$peakHoursQuota 	 = round($userQuota['peakHours'], 2);
-	$boardroomHoursQuota = round($userQuota['boardroomHours'], 2);
-	$offHoursQuota 		 = round($userQuota['unStaffedHours'], 2);
+	$weeklyData = $_POST['quota']['rows']['weeklyQuota'];
 }
 
 ?>
@@ -33,63 +25,36 @@ if(!empty($_POST['quota']['rows'])) {
 <div class="col-md-4">
 	<section class="card mb-4">
 		<header class="card-header">
-			<h2 class="card-title">Normal Hours</h2>
+			<h2 class="card-title">Normal Hours <i class="far fa-question-circle small" data-toggle="tooltip" data-placement="top" title="Normal Hours Usage Limit for Current Week"></i></h2>
 		</header>
 		<div class="card-body">
-<?php
-			if($normalExtensionHoursQuota > 0) {
-				$total = $normalExtensionHoursQuota + $normalHoursQuota;
-?>
-				<?php echo "$normalHoursQuota + $normalExtensionHoursQuota = $total"; ?>
-<?php
-			} else {
-?>
-				<?php echo $normalHoursQuota; ?>
-<?php
-			}
-?>
+			<b>Month: </b><?php echo (!empty($monhlyData)) ? $monhlyData['normalHours'] : 0; ?>
+			<br/>
+			<b>Week: </b><?php echo (!empty($weeklyData)) ? $weeklyData['normalHours'] : 0; ?>
 		</div>
 	</section>
 </div>
 <div class="col-md-4">
 	<section class="card mb-4">
 		<header class="card-header">
-			<h2 class="card-title">Boardroom Hours</h2>
+			<h2 class="card-title">Boardroom Hours <i class="far fa-question-circle small" data-toggle="tooltip" data-placement="top" title="Boardroom Hours Usage Limit for Current Week"></i></h2>
 		</header>
 		<div class="card-body">
-<?php
-			if($boardroomExtensionHoursQuota > 0) {
-				$total = $boardroomExtensionHoursQuota + $boardroomHoursQuota;
-?>
-				<?php echo "$boardroomHoursQuota + $boardroomExtensionHoursQuota = $total"; ?>
-<?php
-			} else {
-?>
-				<?php echo $boardroomHoursQuota; ?>
-<?php
-			}
-?>
+			<b>Month: </b><?php echo (!empty($monhlyData)) ? $monhlyData['boardroomHours'] : 0; ?>
+			<br/>
+			<b>Week: </b><?php echo (!empty($weeklyData)) ? $weeklyData['boardroomHours'] : 0; ?>
 		</div>
 	</section>
 </div>
 <div class="col-md-4">
 	<section class="card mb-4">
 		<header class="card-header">
-			<h2 class="card-title">Un-Staffed Hours</h2>
+			<h2 class="card-title">Un-Staffed Hours <i class="far fa-question-circle small" data-toggle="tooltip" data-placement="top" title="Un-Staffed Hours Usage Limit for Current Week"></i></h2>
 		</header>
 		<div class="card-body">
-<?php
-			if($offHoursExtensionQuota > 0) {
-				$total = $offHoursExtensionQuota + $offHoursQuota;
-?>
-				<?php echo "$offHoursQuota + $offHoursExtensionQuota = $total"; ?>
-<?php
-			} else {
-?>
-				<?php echo $offHoursQuota; ?>
-<?php
-			}
-?>
+			<b>Month: </b><?php echo (!empty($monhlyData)) ? $monhlyData['unStaffedHours'] : 0; ?>
+			<br/>
+			<b>Week: </b><?php echo (!empty($weeklyData)) ? $weeklyData['unStaffedHours'] : 0; ?>
 		</div>
 	</section>
 </div>

@@ -36,6 +36,7 @@
 													<th>Last Name</th>
 													<th>Email</th>
 													<th>Designation</th>
+													<th>Quota Expiry</th>
 													<th>Actions</th>
 												</tr>
 											</thead>
@@ -50,6 +51,7 @@
 													<td><?php echo $value->lastName; ?></td>
 													<td><?php echo $value->email; ?></td>
 													<td><?php echo $value->UserDesignation->title; ?></td>
+													<td><?php echo ($value->UserHoursQuotum && $value->UserHoursQuotum->expiry) ? date_format(date_create($value->UserHoursQuotum->expiry), 'd-m-Y h:i:s a') : '-'; ?></td>
 													<td class="actions">
 														<a href="user.php?id=<?php echo $value->id; ?>" target = "blank" class="on-default"><i class="fas fa-pencil-alt"></i></a>
 <?php

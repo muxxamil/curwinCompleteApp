@@ -13,6 +13,8 @@
 		<script src="vendor/magnific-popup/jquery.magnific-popup.js"></script>
 		<script src="vendor/jquery-placeholder/jquery-placeholder.js"></script>
 		<script src="vendor/pnotify/pnotify.custom.js"></script>
+		<script src="vendor/moment/moment.js"></script>
+		<script src="vendor/moment/moment-timezone.js"></script>
 
 		<!-- Specific Page Vendor -->
 <?php

@@ -6,6 +6,10 @@
 
 	$is_active = false;
 
+	/*if(!empty($_POST['expiry'])) {
+		$_POST['expiry'] = date_format(date_create($_POST['expiry']), 'Y-m-d 23:59:59');
+	}*/
+
 	if(!empty($_POST['active']) && $_POST['active'] == 'on') {
 		$is_active = true;
 	}

@@ -17,7 +17,7 @@
 		$user_designations 	= Users::get_designations();
 		$user_list 			= Users::get_users($params);
 
-		$user_quota =  Users::get_user_quota(['id' => $_GET['id']]);
+		$user_quota =  Users::get_user_quota(['id' => $_GET['id'], 'typeId' => $QUOTA_TYPE['DEFAULT']]);
 	}
 
 	$user_designations = $user_designations['body']->rows;
@@ -130,6 +130,20 @@
 														<input type="number" min=0 name = "unStaffedHours" class="form-control" id="unStaffedHours" value="<?php echo $user_quota->unStaffedHours; ?>">
 													</div>
 
+												</div>
+
+												<div class="form-group row">
+													<label class="col-lg-3 control-label text-lg-right pt-2">Quota Expiry</label>
+													<div class="col-lg-6">
+														<div class="input-group">
+															<span class="input-group-prepend">
+																<span class="input-group-text">
+																	<i class="fas fa-calendar-alt"></i>
+																</span>
+															</span>
+															<input type="text" name="expiry" id="expiry" data-plugin-datepicker class="form-control" value="<?php echo date_format(date_create($user_quota->expiry), 'm/d/Y'); ?>">
+														</div>
+													</div>
 												</div>
 
 												<div class="form-group row">

@@ -37,6 +37,11 @@ $USER_DESIGNATION = array(
 	"visitor" => "7"
 );
 
+$QUOTA_TYPE = array(
+	"DEFAULT" => "1",
+	"EXTENDED" => "2",
+);
+
 function hasAccess($page, $privArr) {
 	global $DEFINITION_PRIVILEGES;
 	return in_array($DEFINITION_PRIVILEGES[$page], $privArr);

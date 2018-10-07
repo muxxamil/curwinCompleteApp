@@ -37,7 +37,7 @@ function refreshUserQuota() {
 	    url: 'controllers/ajax/get_user_quota.php',
 	    type: 'GET',
 	    dataType: "json",
-	    data: {onlyLoggedInUser: true},
+	    data: {onlyLoggedInUser: true, expiry: moment.utc().format("YYYY-MM-DD HH:mm:ss")},
         success: (data) => {
 		    if(data && data.status == 200) {
 		    	$.ajax({
