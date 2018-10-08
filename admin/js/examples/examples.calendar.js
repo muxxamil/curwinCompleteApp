@@ -119,7 +119,7 @@ async function getLatestEvents() {
 		        });
 		      element.popover({
 		        title: eventObj.title,
-		        content: 'From: ' + eventObj.from + '<br/>To: ' + eventObj.to + '<br/>By: ' + eventObj.by,
+		        content: 'From: ' + eventObj.from + '<br/>To: ' + eventObj.to + '<br/>For: ' + eventObj.by,
 		        trigger: 'hover',
 		        placement: 'top',
             	html: true,

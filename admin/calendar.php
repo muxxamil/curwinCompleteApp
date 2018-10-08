@@ -3,10 +3,23 @@
 	include_once('config/defaults.php');
 	include_once('config/api_caller.php');
 	include_once('controllers/RentalLocations.cls.php');
+	include_once('controllers/Users.cls.php');
 
+	$rental_locations = RentalLocations::get_rental_locations();
 	$rental_locations = RentalLocations::get_rental_locations();
 
 	$rental_locations = (!empty($rental_locations['body']) && !empty($rental_locations['body']->rows)) ? $rental_locations['body']->rows : [];
+
+	if (session_status() == PHP_SESSION_NONE) {
+	    session_start();
+	}
+
+	$showUserDropdown = false;
+
+	if(in_array($PRIVILEGES['CAN_BOOK_LOCATION_FOR_ALL_USERS'], $_SESSION['privileges'])) {
+		$showUserDropdown = true;
+		$user_list 	= Users::get_users();
+	}
 
 	$pageTitle = "Calendar";
 	$activeNav = "Calendar";
@@ -45,6 +58,25 @@
 							<div class="card-body">
 								<form class="booking-schedule-form" action = "controllers/ajax/book_location.php" method="post">
 									<input type="hidden" name="bookingForDate" id="bookingForDate" value=""/>
+<?php
+									if($showUserDropdown) {
+?>
+										<div class="form-row mb-2">
+											<div class="form-group col-md-12">
+												<label for="inputState">Booking For</label>
+												<select id="bookingFor" name = "bookingFor" class="form-control" required>
+													<option value="">Please Select User</option>
+<?php
+													foreach ($user_list['body']->rows as $key => $value) {
+?>
+														<option value="<?php echo $value->id; ?>"><?php echo $value->firstName . $value->lastName; ?></option>
+<?php												}
+?>											</select>
+											</div>
+										</div>
+<?php
+									}
+?>
 									<div class="form-row">
 										<div class="form-group col-md-12">
 											<label for="inputState">Rental Location</label>
@@ -64,6 +96,7 @@
 											
 										</div>
 									</div>
+
 									<div class="form-row">
 										<div class="form-group col-md-6">
 											<label for="inputState">Time From</label>
